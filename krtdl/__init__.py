@@ -14,6 +14,7 @@ from .Options import KRtDLOptions, create_option_groups
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APContainer
 from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
+from Utils import local_path
 
 BaseID = 24102011
 
