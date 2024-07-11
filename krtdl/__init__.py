@@ -4,6 +4,7 @@ from worlds.LauncherComponents import Component, SuffixIdentifier, Type, compone
 import settings
 import struct
 import typing
+import zipfile
 from typing import Any, Dict, List, Optional
 from logging import info
 import os
