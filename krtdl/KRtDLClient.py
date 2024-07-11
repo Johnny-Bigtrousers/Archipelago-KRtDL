@@ -185,7 +185,7 @@ class DolphinBridge:
 
     def __init__(self, logger) -> None:
         self.logger = logger
-        self.dolphin_client = DolphinClient(logger)
+        self.dolphin_client = DolphinInstance(logger)
 
     def connect_to_game(self):
         try:
