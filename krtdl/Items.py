@@ -21,15 +21,6 @@ class ItemData:
         self.classification = progression
         self.max_capacity = max_capacity
 
-    def is_progression(self):
-        return self.classification & ItemClassification.progression == ItemClassification.progression
-
-    def is_trap(self):
-        return self.classification & ItemClassification.trap == ItemClassification.trap
-
-    def is_filler(self):
-        return self.classification & ItemClassification.filler == ItemClassification.filler
-
 item_table = {
     # junk items
   
