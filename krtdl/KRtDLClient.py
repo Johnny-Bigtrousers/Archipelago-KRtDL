@@ -35,27 +35,6 @@ status_messages = {
     ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
 }
 
-class KRtDLCommandProcessor(ClientCommandProcessor):
-    def __init__(self, ctx: CommonContext):
-        super().__init__(ctx)
-
-    def _cmd_test_message(self, *args):
-        """Send a message to the game interface."""
-        self.ctx.notification_manager.queue_notification(' '.join(map(str, args)))
-
-    def _cmd_status(self, *args):
-        """Display the current dolphin connection status."""
-        logger.info(f"Connection status: {status_messages[self.ctx.connection_state]}")
-
-    def _cmd_deathlink(self):
-        """Toggle deathlink from client. Overrides default setting."""
-        if isinstance(self.ctx, KRtDLContext):
-            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
-            Utils.async_start(self.ctx.update_death_link(
-                self.ctx.death_link_enabled), name="Update Deathlink")
-            logger.info(
-                f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
-
 class NotificationManager:
     notification_queue = []
     time_since_last_message: int = 0
@@ -79,6 +58,27 @@ class NotificationManager:
                 self.notification_queue.pop(0)
                 self.last_message_time = time.time()
                 self.time_since_last_message = 0
+
+class KRtDLCommandProcessor(ClientCommandProcessor):
+    def __init__(self, ctx: CommonContext):
+        super().__init__(ctx)
+
+    def _cmd_test_message(self, *args):
+        """Send a message to the game interface."""
+        self.ctx.notification_manager.queue_notification(' '.join(map(str, args)))
+
+    def _cmd_status(self, *args):
+        """Display the current dolphin connection status."""
+        logger.info(f"Connection status: {status_messages[self.ctx.connection_state]}")
+
+    def _cmd_deathlink(self):
+        """Toggle deathlink from client. Overrides default setting."""
+        if isinstance(self.ctx, KRtDLContext):
+            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
+            Utils.async_start(self.ctx.update_death_link(
+                self.ctx.death_link_enabled), name="Update Deathlink")
+            logger.info(
+                f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
 
 class DolphinInstance:
     dolphin: dolphin_memory_engine
