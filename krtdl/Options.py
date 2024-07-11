@@ -3,9 +3,6 @@ from dataclasses import dataclass
 from worlds.AutoWorld import PerGameCommonOptions
 from Options import Choice, Range, Toggle, DeathLink, DefaultOnToggle, OptionGroup, OptionSet
 
-if TYPE_CHECKING:
-    from . import KRtDLWorld
-
 def create_option_groups() -> List[OptionGroup]:
     option_group_list: List[OptionGroup] = []
     for name, options in krtdl_option_groups.items():
