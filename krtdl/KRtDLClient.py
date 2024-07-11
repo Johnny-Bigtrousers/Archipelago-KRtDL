@@ -21,6 +21,19 @@ HUD_MESSAGE_ADDRESS = 0x80EB0BE0
 HUD_MESSAGE_DURATION = 10.0
 HUD_MAX_MESSAGE_SIZE = 194
 
+class ConnectionState(Enum):
+    DISCONNECTED = 0
+    IN_GAME = 1
+    IN_MENU = 2
+    MULTIPLE_DOLPHIN_INSTANCES = 3
+
+status_messages = {
+    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land",
+    ConnectionState.IN_MENU: "Connected to game, waiting for game to start",
+    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance, attempting to reconnect...",
+    ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
+}
+
 class KRtDLCommandProcessor(ClientCommandProcessor):
     def __init__(self, ctx: CommonContext):
         super().__init__(ctx)
@@ -65,14 +78,6 @@ class NotificationManager:
                 self.notification_queue.pop(0)
                 self.last_message_time = time.time()
                 self.time_since_last_message = 0
-
-status_messages = {
-    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land",
-    ConnectionState.IN_MENU: "Connected to game, waiting for game to start",
-    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance, attempting to reconnect...",
-    ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
-}
-
 
 class KRtDLContext(CommonContext):
     game = "Kirby's Return to Dream Land"
@@ -181,12 +186,6 @@ class DolphinInstance:
         self.__assert_connected()
         result = self.dolphin.write_bytes(address, data)
         return result
-
-class ConnectionState(Enum):
-    DISCONNECTED = 0
-    IN_GAME = 1
-    IN_MENU = 2
-    MULTIPLE_DOLPHIN_INSTANCES = 3
 
 class InventoryItemData(ItemData):
     """Class used to track the player'scurrent items and their quantities"""
