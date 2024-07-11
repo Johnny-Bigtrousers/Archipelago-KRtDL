@@ -1,4 +1,3 @@
-import typing
 from .GameNames import ItemNames
 from BaseClasses import Item, ItemClassification
 
@@ -21,7 +20,7 @@ class ItemData:
         self.classification = progression
         self.max_capacity = max_capacity
 
-item_table = {
+item_table: {dict[str, ItemData] = {
     # junk items
   
     ItemNames.gold_star.value: ItemData(ItemNames.gold_star.value, 0, ItemClassification.filler),
