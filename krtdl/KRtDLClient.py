@@ -15,6 +15,7 @@ import struct
 from enum import Enum
 from CommonClient import ClientCommandProcessor, CommonContext, get_base_parser, logger, server_loop, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
+from .Items import ItemData, item_table
 
 HEADER_ID_ADDRESS = 0x80000000
 HUD_MESSAGE_ADDRESS = 0x80EB0BE0
