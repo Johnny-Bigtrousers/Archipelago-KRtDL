@@ -228,7 +228,7 @@ class DolphinBridge:
                 self.current_game = version
             else:
                 self.logger.warn(
-                    f"Strange header detected. Please use a blank US 'SUKE01' copy of the game.")
+                    f"Strange header detected. Please use a US 'SUKE01' copy of the game.")
                 self.game_id_error = game_id
         except DolphinException as e:
             pass
