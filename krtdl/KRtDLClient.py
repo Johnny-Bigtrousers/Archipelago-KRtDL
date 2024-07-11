@@ -93,9 +93,11 @@ class InventoryItemData(ItemData):
 
 class DolphinInstance:
     dolphin: dolphin_memory_engine
+    logger: Logger
     
     def __init__(self):
         self.dolphin = dolphin_memory_engine
+        self.logger = logger
 
     def is_connected(self):
         try:
