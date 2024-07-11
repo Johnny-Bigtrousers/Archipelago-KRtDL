@@ -10,7 +10,6 @@ import os
 from .Items import KRtDLItems
 from .Locations import KRtDLLocations, composite_location
 from .Options import KRtDLOptions
-from .KRtDLClient import HUD_MESSAGE_DURATION
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APContainer
 from BaseClasses import Region, Location, Entrance, Item, RegionType, Tutorial, ItemClassification
