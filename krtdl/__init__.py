@@ -85,7 +85,7 @@ class KRtDLWorld(World):
     options_dataclass = KRtDLOptions
     options: KRtDLOptions
     topology_present = True
-    item_name_to_id = item_table
+    item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = composite_location
 
     def generate_output(self, output_directory: str) -> None:
