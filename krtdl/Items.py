@@ -1,5 +1,21 @@
-from .GameNames import ItemNames
 from BaseClasses import Item, ItemClassification
+from enum import Enum
+
+class ItemNames(Enum):
+    gold_star = "Gold Star"
+    red_star = "Red Star"
+    blue_star = "Blue Star"
+    one_up = "1-Up"
+    food_pickup = "Food Pickup"
+    m_tomato = "Maxim Tomato"
+    energy_sphere = "Energy Sphere"
+    part_sphere = "Part Sphere"
+    energy_sphere_ex = "Extra Energy Sphere"
+    part_sphere_ex = "Extra Part Sphere"
+    sleep_trap = "Sleep Trap"
+    eject_trap = "Eject Trap"
+    mouthful_trap = "Mouthful Trap"
+
 
 BaseID = 24102011
 
