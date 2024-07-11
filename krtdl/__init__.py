@@ -4,13 +4,14 @@ from worlds.LauncherComponents import Component, SuffixIdentifier, Type, icon_pa
 import settings
 import struct
 import typing
-import zipfile
 from typing import Any, Dict, List, Optional
+import zipfile
 from logging import info
 import os
 from .Items import KRtDLItems, item_table
 from .Locations import KRtDLLocations, composite_location
 from .Options import KRtDLOptions, create_option_groups
+from .Config import make_config
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APContainer
 from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
