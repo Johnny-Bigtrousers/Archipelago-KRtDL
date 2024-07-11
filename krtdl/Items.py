@@ -20,15 +20,20 @@ class ItemData:
         self.classification = progression
         self.max_capacity = max_capacity
 
-item_table: {dict[str, ItemData] = {
+item_table: dict[str, ItemData] = {
+    # junk items
     ItemNames.gold_star.value: ItemData(ItemNames.gold_star.value, 0, ItemClassification.filler),
     ItemNames.red_star.value: ItemData(ItemNames.red_star.value, 1, ItemClassification.filler),
     ItemNames.blue_star.value: ItemData(ItemNames.blue_star.value, 2, ItemClassification.filler),
+
+    # useful items
     ItemNames.one_up.value: ItemData(ItemNames.one_up.value, 3, ItemClassification.useful),
-    ItemNames.food_pickup.value: ItemData(ItemNames.food_pickup.value, 13, ItemClassification.filler),
+    ItemNames.food_pickup.value: ItemData(ItemNames.food_pickup.value, 13, ItemClassification.useful),
     ItemNames.m_tomato.value: ItemData(ItemNames.m_tomato.value, 14, ItemClassification.useful),
+
+    # progression items
     ItemNames.energy_sphere.value: ItemData(ItemNames.energy_sphere.value, 24, ItemClassification.progression, 120),
     ItemNames.part_sphere.value: ItemData(ItemNames.part_sphere.value, 25, ItemClassification.progression, 5),
     ItemNames.energy_sphere_ex.value: ItemData(ItemNames.energy_sphere_ex.value, 26, ItemClassification.progression, 120),
-    ItemNames.part_sphere_ex.value: ItemData(ItemNames.part_sphere_ex.value, 27, ItemClassification.progression, 5)
+    ItemNames.part_sphere_ex.value: ItemData(ItemNames.part_sphere_ex.value, 27, ItemClassification.progression, 5),
 }
