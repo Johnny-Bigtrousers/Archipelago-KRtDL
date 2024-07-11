@@ -9,7 +9,7 @@ from logging import info
 import os
 from .Items import KRtDLItems
 from .Locations import KRtDLLocations, composite_location
-from .Options import KRtDLOptions
+from .Options import KRtDLOptions, create_option_groups
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APContainer
 from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
