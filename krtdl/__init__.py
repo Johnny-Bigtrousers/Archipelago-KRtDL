@@ -8,7 +8,7 @@ import zipfile
 from typing import Any, Dict, List, Optional
 from logging import info
 import os
-from .Items import KRtDLItems
+from .Items import KRtDLItems, item_table
 from .Locations import KRtDLLocations, composite_location
 from .Options import KRtDLOptions, create_option_groups
 from worlds.AutoWorld import World, WebWorld
@@ -84,6 +84,7 @@ class KRtDLWorld(World):
     options_dataclass = KRtDLOptions
     options: KRtDLOptions
     topology_present = True
+    item_name_to_id = item_table
     location_name_to_id = composite_location
 
     def generate_output(self, output_directory: str) -> None:
