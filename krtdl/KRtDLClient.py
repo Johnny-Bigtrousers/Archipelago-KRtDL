@@ -80,33 +80,6 @@ class NotificationManager:
                 self.last_message_time = time.time()
                 self.time_since_last_message = 0
 
-class KRtDLContext(CommonContext):
-    game = "Kirby's Return to Dream Land"
-    command_processor = KRtDLCommandProcessor
-    notification_manager: NotificationManager
-    items_handling = 0b111
-    dolphin_sync_task = None
-    connection_state = ConnectionState.DISCONNECTED
-    death_link_enabled = False
-
-    async def server_auth(self, password_requested: bool = False):
-        if password_requested and not self.password:
-            await super(KRtDLContext, self).server_auth(password_requested)
-        await self.get_username()
-        await self.send_connect()
-
-    def run_gui(self):
-        from kvui import GameManager
-
-        class KRtDLManager(GameManager):
-            logging_pairs = [
-                ("Client", "Archipelago")
-            ]
-            base_title = "Archipelago Kirby's Return to Dream Land Client"
-
-        self.ui = KRtDLManager(self)
-        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
-
 class DolphinInstance:
     dolphin: dolphin_memory_engine
     
@@ -187,17 +160,6 @@ class DolphinInstance:
         self.__assert_connected()
         result = self.dolphin.write_bytes(address, data)
         return result
-
-class InventoryItemData(ItemData):
-    """Class used to track the player'scurrent items and their quantities"""
-    current_amount: int
-    current_capacity: int
-
-    def __init__(self, item_data: ItemData, current_amount: int, current_capacity: int) -> None:
-        super().__init__(item_data.name, item_data.id,
-                         item_data.classification, item_data.max_capacity)
-        self.current_amount = current_amount
-        self.current_capacity = current_capacity
 
 class DolphinBridge:
     dolphin_client: DolphinInstance
@@ -296,6 +258,45 @@ class DolphinBridge:
 
         self.dolphin_client.write_address(HUD_MESSAGE_ADDRESS, encoded_message)
 
+class KRtDLContext(CommonContext):
+    game = "Kirby's Return to Dream Land"
+    command_processor = KRtDLCommandProcessor
+    notification_manager: NotificationManager
+    dolphin_bridge: DolphinBridge
+    items_handling = 0b111
+    dolphin_sync_task = None
+    connection_state = ConnectionState.DISCONNECTED
+    death_link_enabled = False
+
+    async def server_auth(self, password_requested: bool = False):
+        if password_requested and not self.password:
+            await super(KRtDLContext, self).server_auth(password_requested)
+        await self.get_username()
+        await self.send_connect()
+
+    def run_gui(self):
+        from kvui import GameManager
+
+        class KRtDLManager(GameManager):
+            logging_pairs = [
+                ("Client", "Archipelago")
+            ]
+            base_title = "Archipelago Kirby's Return to Dream Land Client"
+
+        self.ui = KRtDLManager(self)
+        self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
+
+class InventoryItemData(ItemData):
+    """Class used to track the player'scurrent items and their quantities"""
+    current_amount: int
+    current_capacity: int
+
+    def __init__(self, item_data: ItemData, current_amount: int, current_capacity: int) -> None:
+        super().__init__(item_data.name, item_data.id,
+                         item_data.classification, item_data.max_capacity)
+        self.current_amount = current_amount
+        self.current_capacity = current_capacity
+
 def update_connection_status(ctx: KRtDLContext, status):
     if ctx.connection_state == status:
         return
@@ -330,7 +331,7 @@ async def dolphin_task(ctx: KRtDLContext):
     while not ctx.exit_event.is_set():
         try:
             # needs to connect somewhere else for this to work
-            # connection_state = ctx.game_interface.get_connection_state()
+            connection_state = ctx.dolphin_bridge.get_connection_state()
             update_connection_status(ctx, connection_state)
             if connection_state == ConnectionState.IN_MENU:
                 await handle_check_goal_complete(ctx)  # It will say the player is in menu sometimes
@@ -374,7 +375,7 @@ async def _handle_game_ready(ctx: KRtDLContext):
         if not ctx.slot:
             await asyncio.sleep(1)
             return
-        current_inventory = ctx.game_interface.get_current_inventory()
+        current_inventory = ctx.dolphin_bridge.get_current_inventory()
         await handle_receive_items(ctx, current_inventory)
         ctx.notification_manager.handle_notifications()
         await handle_checked_location(ctx, current_inventory)
@@ -391,7 +392,7 @@ async def _handle_game_ready(ctx: KRtDLContext):
 async def _handle_game_not_ready(ctx: KRtDLContext):
     """If the game is not connected or not in a playable state, this will attempt to retry connecting to the game."""
     if ctx.connection_state == ConnectionState.DISCONNECTED:
-        ctx.game_interface.connect_to_game()
+        ctx.dolphin_bridge.connect_to_game()
     elif ctx.connection_state == ConnectionState.IN_MENU:
         await asyncio.sleep(3)
 
