@@ -145,7 +145,7 @@ class DolphinInstance:
         """Ensures that the target address is within the valid range for GC memory"""
         if target_address < 0x80000000 or target_address + read_size > 0x81800000:
             raise DolphinException(
-                f"{target_address:x} -> {target_address + read_size:x} is not a valid for GC memory"
+                f"{target_address:x} -> {target_address + read_size:x} is not a valid memory address. Please write between the ranges 0x80000000 and 0x81800000."
             )
 
     def read_pointer(self, pointer, offset, byte_count):
