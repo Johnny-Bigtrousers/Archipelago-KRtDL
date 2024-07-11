@@ -65,7 +65,7 @@ class KRtDLContainer(APContainer):
                  player=None, player_name: str = "", server: str = ""):
         self.config_json = config_json
         self.config_path = "config.json"
-        container_path = os.path.join(output_directory, outfile_name + ".apmp1")
+        container_path = os.path.join(output_directory, outfile_name + ".krtdl")
         super().__init__(container_path, player, player_name, server)
 
     def write_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
