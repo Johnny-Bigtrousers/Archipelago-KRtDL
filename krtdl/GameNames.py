@@ -11,6 +11,9 @@ class ItemNames(Enum):
     part_sphere = "Part Sphere"
     energy_sphere_ex = "Extra Energy Sphere"
     part_sphere_ex = "Extra Part Sphere"
+    sleep_trap = "Sleep Trap"
+    eject_trap = "Eject Trap"
+    mouthful_trap = "Mouthful Trap"
 
 class StageNames(Enum):
     stage1_1 = "Cookie Country Stage 1"
