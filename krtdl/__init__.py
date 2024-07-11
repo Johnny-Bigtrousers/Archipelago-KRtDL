@@ -28,7 +28,7 @@ components.append(
               file_identifier=SuffixIdentifier(".krtdl"))
 )
 
-icon_paths['krtdlicon'] = local_path('worlds', 'krtdl', 'krtdlicon.png')
+icon_paths['krtdlicon'] = local_path('custom_worlds', 'krtdl.apworld', 'krtdlicon.png')
 
 class KRtDLSettings(settings.Group):
     class RomFile(settings.UserFilePath):
