@@ -30,5 +30,5 @@ item_table: {dict[str, ItemData] = {
     ItemNames.energy_sphere.value: ItemData(ItemNames.energy_sphere.value, 24, ItemClassification.progression, 120),
     ItemNames.part_sphere.value: ItemData(ItemNames.part_sphere.value, 25, ItemClassification.progression, 5),
     ItemNames.energy_sphere_ex.value: ItemData(ItemNames.energy_sphere_ex.value, 26, ItemClassification.progression, 120),
-    ItemNames.part_sphere_ex.value: ItemData(ItemNames.part_sphere_ex.value, 27, ItemClassification.progression, 5),
+    ItemNames.part_sphere_ex.value: ItemData(ItemNames.part_sphere_ex.value, 27, ItemClassification.progression, 5)
 }
