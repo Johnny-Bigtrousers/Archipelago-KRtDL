@@ -203,6 +203,20 @@ class DolphinBridge:
         self.dolphin_client.disconnect()
         self.logger.info("Disconnected from Dolphin Emulator")
 
+    def get_item(self, item_id: int) -> InventoryItemData:
+        for item in item_table.values():
+            if item.id == item_id:
+                return self.get_item(item)
+        return None
+
+    def get_current_inventory(self) -> dict[str, InventoryItemData]:
+        MAX_VANILLA_ITEM_ID = 39
+        inventory: dict[str, InventoryItemData] = {}
+        for item in item_table.values():
+            if item.id <= MAX_VANILLA_ITEM_ID:
+                inventory[item.name] = self.get_item(item)
+        return inventory
+    
     def get_connection_state(self):
         try:
             connected = self.dolphin_client.is_connected()
