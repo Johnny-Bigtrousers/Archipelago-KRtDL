@@ -79,7 +79,7 @@ class KRtDLWorld(World):
     """
 
     game = "Kirby's Return to Dream Land"
-    web = KRtDLWeb
+    web = KRtDLWeb()
     options_dataclass = KRtDLOptions
     options: KRtDLOptions
     topology_present = True
