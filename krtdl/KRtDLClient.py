@@ -5,10 +5,14 @@ import dolphin_memory_engine
 import subprocess
 import Utils
 import asyncio
+import multiprocessing
 import subprocess
 import traceback
 import zipfile
 import time
+import json
+import struct
+from enum import Enum
 from CommonClient import ClientCommandProcessor, CommonContext, get_base_parser, logger, server_loop, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
 
@@ -153,6 +157,12 @@ class DolphinInstance:
         result = self.dolphin.write_bytes(address, data)
         return result
 
+class ConnectionState(Enum):
+    DISCONNECTED = 0
+    IN_GAME = 1
+    IN_MENU = 2
+    MULTIPLE_DOLPHIN_INSTANCES = 3
+
 class InventoryItemData(ItemData):
     """Class used to track the player'scurrent items and their quantities"""
     current_amount: int
@@ -173,7 +183,6 @@ class DolphinBridge:
     # cstate_manager_global
     # cplayer_vtable: None
     game_id_error: str = None
-    game_rev_error: int = None
     current_game: str = None
 
     def __init__(self, logger) -> None:
