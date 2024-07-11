@@ -3,13 +3,6 @@ from dataclasses import dataclass
 from worlds.AutoWorld import PerGameCommonOptions
 from Options import Choice, Range, Toggle, DeathLink, DefaultOnToggle, OptionGroup, OptionSet
 
-def create_option_groups() -> List[OptionGroup]:
-    option_group_list: List[OptionGroup] = []
-    for name, options in krtdl_option_groups.items():
-        option_group_list.append(OptionGroup(name=name, options=options))
-
-    return option_group_list
-
 class Goal(Choice):
     """Determines the goal for your run.
     
@@ -259,6 +252,13 @@ class KRtDLOptions(PerGameCommonOptions):
     MouthfulWeight:           MouthfulWeight
 
     death_link:               DeathLink
+
+def create_option_groups() -> List[OptionGroup]:
+    option_group_list: List[OptionGroup] = []
+    for name, options in krtdl_option_groups.items():
+        option_group_list.append(OptionGroup(name=name, options=options))
+
+    return option_group_list
 
 krtdl_option_groups: Dict[str, List[Any]] = {
     "Basic Options": [Goal, EnergySphereHuntRequirement, ShuffleCookieCountry, ShuffleRaisinRuins, ShuffleOnionOcean, ShuffleWhiteWafers, ShuffleNuttyNoon, ShuffleEggEngines, ShuffleDangerousDinner, StartingWorld, UnlockWorlds],
