@@ -1,3 +1,4 @@
+from enum import Enum
 from .GameNames import ItemNames
 from BaseClasses import Item, ItemClassification
 
