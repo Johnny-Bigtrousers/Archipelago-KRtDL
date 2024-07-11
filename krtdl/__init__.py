@@ -12,7 +12,7 @@ from .Locations import KRtDLLocations, composite_location
 from .Options import KRtDLOptions
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APContainer
-from BaseClasses import Region, Location, Entrance, Item, RegionType, Tutorial, ItemClassification
+from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
 
 BaseID = 24102011
 
