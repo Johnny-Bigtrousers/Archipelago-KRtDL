@@ -403,7 +403,7 @@ async def patch_and_run_game(krtdl_file: str):
                 config_json = file.read().decode("utf-8")
                 config_json = json.loads(config_json)
 
-        config_json["gameConfig"]["updateHintStateReplacement"] = construct_hud_message_patch(game_version)
+        # config_json["gameConfig"]["updateHintStateReplacement"] = construct_hud_message_patch(game_version)
 
     
         # this is the point where the RVZ must be patched.                         py_randomprime.patch_iso(input_rvz_path, output_path, config_json, notifier)
