@@ -153,6 +153,17 @@ class DolphinInstance:
         result = self.dolphin.write_bytes(address, data)
         return result
 
+class InventoryItemData(ItemData):
+    """Class used to track the player'scurrent items and their quantities"""
+    current_amount: int
+    current_capacity: int
+
+    def __init__(self, item_data: ItemData, current_amount: int, current_capacity: int) -> None:
+        super().__init__(item_data.name, item_data.id,
+                         item_data.classification, item_data.max_capacity)
+        self.current_amount = current_amount
+        self.current_capacity = current_capacity
+
 class DolphinBridge:
     dolphin_client: DolphinInstance
     connection_status: str
