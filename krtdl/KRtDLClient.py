@@ -95,7 +95,7 @@ class DolphinInstance:
     dolphin: dolphin_memory_engine
     logger: Logger
     
-    def __init__(self):
+    def __init__(self, logger):
         self.dolphin = dolphin_memory_engine
         self.logger = logger
 
