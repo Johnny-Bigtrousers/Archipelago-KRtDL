@@ -91,6 +91,9 @@ class InventoryItemData(ItemData):
         self.current_amount = current_amount
         self.current_capacity = current_capacity
 
+class DolphinException(Exception):
+    pass
+
 class DolphinInstance:
     dolphin: dolphin_memory_engine
     logger: Logger
