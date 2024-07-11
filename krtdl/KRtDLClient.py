@@ -21,6 +21,59 @@ HUD_MESSAGE_ADDRESS = 0x80EB0BE0
 HUD_MESSAGE_DURATION = 10.0
 HUD_MAX_MESSAGE_SIZE = 194
 
+class KRtDLCommandProcessor(ClientCommandProcessor):
+    def __init__(self, ctx: CommonContext):
+        super().__init__(ctx)
+
+    def _cmd_test_message(self, *args):
+        """Send a message to the game interface."""
+        self.ctx.notification_manager.queue_notification(' '.join(map(str, args)))
+
+    def _cmd_status(self, *args):
+        """Display the current dolphin connection status."""
+        logger.info(f"Connection status: {status_messages[self.ctx.connection_state]}")
+
+    def _cmd_deathlink(self):
+        """Toggle deathlink from client. Overrides default setting."""
+        if isinstance(self.ctx, KRtDLContext):
+            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
+            Utils.async_start(self.ctx.update_death_link(
+                self.ctx.death_link_enabled), name="Update Deathlink")
+            logger.info(
+                f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
+
+class NotificationManager:
+    notification_queue = []
+    time_since_last_message: int = 0
+    last_message_time: int = 0
+    message_duration: int = None
+    send_notification_func = None
+
+    def __init__(self, message_duration, send_notification_func):
+        self.message_duration = message_duration / 2  # If there are multiple messages, the duration is shorter
+        self.send_notification_func = send_notification_func
+
+    def queue_notification(self, message):
+        self.notification_queue.append(message)
+
+    def handle_notifications(self):
+        self.time_since_last_message = time.time() - self.last_message_time
+        if len(self.notification_queue) > 0 and self.time_since_last_message >= self.message_duration:
+            notification = self.notification_queue[0]
+            result = self.send_notification_func(notification)
+            if result:
+                self.notification_queue.pop(0)
+                self.last_message_time = time.time()
+                self.time_since_last_message = 0
+
+status_messages = {
+    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land",
+    ConnectionState.IN_MENU: "Connected to game, waiting for game to start",
+    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance, attempting to reconnect...",
+    ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
+}
+
+
 class KRtDLContext(CommonContext):
     game = "Kirby's Return to Dream Land"
     command_processor = KRtDLCommandProcessor
@@ -47,34 +100,6 @@ class KRtDLContext(CommonContext):
 
         self.ui = KRtDLManager(self)
         self.ui_task = asyncio.create_task(self.ui.async_run(), name="UI")
-
-class KRtDLCommandProcessor(ClientCommandProcessor):
-    def __init__(self, ctx: CommonContext):
-        super().__init__(ctx)
-
-    def _cmd_test_message(self, *args):
-        """Send a message to the game interface."""
-        self.ctx.notification_manager.queue_notification(' '.join(map(str, args)))
-
-    def _cmd_status(self, *args):
-        """Display the current dolphin connection status."""
-        logger.info(f"Connection status: {status_messages[self.ctx.connection_state]}")
-
-    def _cmd_deathlink(self):
-        """Toggle deathlink from client. Overrides default setting."""
-        if isinstance(self.ctx, KRtDLContext):
-            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
-            Utils.async_start(self.ctx.update_death_link(
-                self.ctx.death_link_enabled), name="Update Deathlink")
-            logger.info(
-                f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
-
-status_messages = {
-    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land",
-    ConnectionState.IN_MENU: "Connected to game, waiting for game to start",
-    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance, attempting to reconnect...",
-    ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
-}
 
 class DolphinInstance:
     dolphin: dolphin_memory_engine
@@ -270,30 +295,6 @@ class DolphinBridge:
             encoded_message += b"\x00" * num_to_align
 
         self.dolphin_client.write_address(HUD_MESSAGE_ADDRESS, encoded_message)
-
-class NotificationManager:
-    notification_queue = []
-    time_since_last_message: int = 0
-    last_message_time: int = 0
-    message_duration: int = None
-    send_notification_func = None
-
-    def __init__(self, message_duration, send_notification_func):
-        self.message_duration = message_duration / 2  # If there are multiple messages, the duration is shorter
-        self.send_notification_func = send_notification_func
-
-    def queue_notification(self, message):
-        self.notification_queue.append(message)
-
-    def handle_notifications(self):
-        self.time_since_last_message = time.time() - self.last_message_time
-        if len(self.notification_queue) > 0 and self.time_since_last_message >= self.message_duration:
-            notification = self.notification_queue[0]
-            result = self.send_notification_func(notification)
-            if result:
-                self.notification_queue.pop(0)
-                self.last_message_time = time.time()
-                self.time_since_last_message = 0
 
 def update_connection_status(ctx: KRtDLContext, status):
     if ctx.connection_state == status:
