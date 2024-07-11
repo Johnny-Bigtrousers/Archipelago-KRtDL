@@ -369,7 +369,7 @@ async def handle_check_deathlink(ctx: KRtDLContext):
     # elif health > 0 and ctx.is_pending_death_link_reset == True:
         # ctx.is_pending_death_link_reset = False
 
-async def _handle_game_ready(ctx: MetroidPrimeContext):
+async def _handle_game_ready(ctx: KRtDLContext):
     if ctx.server:
         if not ctx.slot:
             await asyncio.sleep(1)
