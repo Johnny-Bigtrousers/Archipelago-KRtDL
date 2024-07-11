@@ -1,6 +1,6 @@
 # HEY BIG DOOFUS YOU NEED TO MAKE THE KRTDL FOLDER THAT ALL OF THIS IS IN TO BE INSIDE OF ANOTHER FOLDER CALLED KRTDL AND THEN TURN IT INTO A ZIP ARCHIVE THEN CHANGE THE EXTENSION TO .APWORLD
 
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess
+from worlds.LauncherComponents import Component, SuffixIdentifier, Type, icon_paths, components, launch_subprocess
 import settings
 import struct
 import typing
@@ -22,9 +22,11 @@ def run_client(url: Optional[str] = None):
     launch_subprocess(launch, name="KRtDLClient")
 
 components.append(
-    Component("Kirby's Return to Dream Land Client", func=run_client, component_type=Type.CLIENT,
+    Component("Kirby's Return to Dream Land Client", func=run_client, component_type=Type.CLIENT, icon='krtdlicon',
               file_identifier=SuffixIdentifier(".krtdl"))
 )
+
+icon_paths['krtdlicon'] = local_path('worlds', 'krtdl', 'krtdlicon.png')
 
 class KRtDLSettings(settings.Group):
     class RomFile(settings.UserFilePath):
