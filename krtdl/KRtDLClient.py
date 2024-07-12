@@ -368,6 +368,17 @@ async def dolphin_task(ctx: KRtDLContext):
             await asyncio.sleep(3)
             continue
 
+async def handle_checked_location(ctx: KRtDLContext, current_inventory: dict[str, InventoryItemData]):
+    """Uses the current amount of UnknownItem1 in inventory as an indicator of which location was checked. This will break if the player collects more than one pickup without having the AP client hooked to the game and server"""
+    logger.info("unfinished location handler")
+    # unknown_item1 = current_inventory["UnknownItem1"]
+    # if (unknown_item1.current_capacity == 0):
+    #     return
+    # checked_location_id = METROID_PRIME_LOCATION_BASE + \
+    #     unknown_item1.current_capacity - 1
+    # await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [checked_location_id]}])
+    # ctx.dolphin_bridge.give_item_to_player(unknown_item1.id, 0, 0)
+
 async def handle_check_goal_complete(ctx: KRtDLContext):
     # if ctx.game_interface.current_game is not None:
         # need to find the memory locations in RAM for states I can work with for this
