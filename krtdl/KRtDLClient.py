@@ -205,7 +205,7 @@ class DolphinBridge:
             game_id = self.dolphin_client.read_address(HEADER_ID_ADDRESS, 6).decode("utf-8")
             self.current_game = None
             if game_id == "SUKE01":
-                self.current_game = version
+                self.current_game = game_id
             else:
                 self.logger.warn(
                     f"Strange header detected. Please use a US 'SUKE01' copy of the game.")
