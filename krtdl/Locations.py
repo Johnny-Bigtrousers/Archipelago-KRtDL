@@ -333,7 +333,7 @@ energy_sphere_table = {
     LocationNames.extra_stage7_3_esphere_2.value: BaseLocationID + 306,
     LocationNames.extra_stage7_3_esphere_3.value: BaseLocationID + 307,
     LocationNames.extra_stage7_3_esphere_4.value: BaseLocationID + 308,
-    LocationNames.extra_stage7_3_esphere_5.value: BaseLocationID + 309,
+    LocationNames.extra_stage7_3_esphere_5.value: BaseLocationID + 309
 }
 
 part_sphere_table = {
@@ -348,7 +348,7 @@ part_sphere_table = {
     LocationNames.extra_stage2_5_part.value: BaseLocationID + 316,
     LocationNames.extra_stage3_5_part.value: BaseLocationID + 317,
     LocationNames.extra_stage4_6_part.value: BaseLocationID + 318,
-    LocationNames.extra_stage5_6_part.value: BaseLocationID + 319,
+    LocationNames.extra_stage5_6_part.value: BaseLocationID + 319
 }
 
 flower_table = {
