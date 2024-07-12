@@ -41,7 +41,7 @@ stage_completion_table = {
     LocationNames.stage7_3_complete.value: BaseLocationID + 31,
     LocationNames.stage7_4_complete.value: BaseLocationID + 32,
     LocationNames.stage8_3_complete.value: BaseLocationID + 33,
-    LocationNames.stage8_4_complete.value: BaseLocationID + 34
+    LocationNames.stage8_4_complete.value: BaseLocationID + 34,
     
     LocationNames.extra_stage1_1_complete.value: BaseLocationID + 35,
     LocationNames.extra_stage1_2_complete.value: BaseLocationID + 36,
