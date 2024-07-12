@@ -202,8 +202,9 @@ class DolphinBridge:
             game_id = ""
             # The first read of the address will be null if the client is faster than the emulator
             self.dolphin_client.read_address(HEADER_ID_ADDRESS, 0)
-            game_id = self.dolphin_client.read_address(HEADER_ID_ADDRESS, 0)
-            self.logger.info(game_id)
+            for index in range(15):
+                game_id = self.dolphin_client.read_address(HEADER_ID_ADDRESS, index)
+                self.logger.info(game_id)
             self.current_game = None
             if game_id == "SUKE01":
                 self.current_game = version
