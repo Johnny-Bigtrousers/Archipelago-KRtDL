@@ -370,6 +370,48 @@ async def dolphin_task(ctx: KRtDLContext):
             await asyncio.sleep(3)
             continue
 
+def inventory_item_by_network_id(network_id: int, current_inventory: dict[str, InventoryItemData]) -> InventoryItemData:
+
+    for item in current_inventory.values():
+        if item.code == network_id:
+            return item
+
+    # Handle custom items like missile launcher and main power bomb
+    # for key, value in custom_suit_upgrade_table.items():
+    #     if value.code == network_id:
+    #         return InventoryItemData(value, 0, 0)
+    return None
+
+async def handle_receive_items(ctx: 'MetroidPrimeContext', current_items: dict[str, InventoryItemData]):
+    logger.info("unfinished handle items")
+    for network_item in ctx.items_received:
+        item_data = inventory_item_by_network_id(
+            network_item.item, current_items)
+        if item_data is None:
+            continue
+        # if item_data.name == "Missile Launcher":
+            # continue
+        # elif item_data.name == "Power Bomb (Main)":
+            # continue
+
+        # Handle Single Item Upgrades
+        if item_data.max_capacity == 1 and item_data.current_amount == 0:
+            ctx.dolphin_bridge.give_item_to_player(item_data.id, 1, 1)
+            if network_item.player != ctx.slot:
+                receipt_message = "online" # receipt_message = "online" if not item_data.name.startswith("Artifact") else "received"
+                ctx.notification_manager.queue_notification(f"{item_data.name} {receipt_message} ({ctx.player_names[network_item.player]})")
+        elif item_data.max_capacity > 1:
+            continue
+
+    # Handle repeat pickups
+
+    # await handle_receive_missiles(ctx, current_items)
+    # await handle_receive_power_bombs(ctx, current_items)
+    # await handle_receive_energy_tanks(ctx, current_items)
+
+    # Handle Artifacts
+    # ctx.game_interface.sync_artifact_layers()
+
 async def handle_checked_location(ctx: KRtDLContext, current_inventory: dict[str, InventoryItemData]):
     """Uses the current amount of UnknownItem1 in inventory as an indicator of which location was checked. This will break if the player collects more than one pickup without having the AP client hooked to the game and server"""
     logger.info("unfinished location handler")
