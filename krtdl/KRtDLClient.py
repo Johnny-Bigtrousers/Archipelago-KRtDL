@@ -1,4 +1,4 @@
-# Based on @hesto2's work on MetroidAPrime (https://github.com/Electro1512/MetroidAPrime/blob/main/DolphinClient.py)
+# Based on @hesto2's work on MetroidAPrime (https://github.com/Electro1512/MetroidAPrime/tree/main)
 
 from logging import Logger
 import dolphin_memory_engine
@@ -31,9 +31,9 @@ class ConnectionState(Enum):
     MULTIPLE_DOLPHIN_INSTANCES = 3
 
 status_messages = {
-    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land",
-    ConnectionState.IN_MENU: "Connected to game, waiting for game to start",
-    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance, attempting to reconnect...",
+    ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land.",
+    ConnectionState.IN_MENU: "Connected to game, waiting for game to start...",
+    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance. Retrying...",
     ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
 }
 
@@ -115,9 +115,9 @@ class DolphinInstance:
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
         if not self.dolphin.is_hooked():
-            self.logger.info(f"Could not connect to Dolphin, verify that you have a game running in the emulator.")
+            self.logger.info(f"Verify that you have the game running in Dolphin. Retrying...")
             raise DolphinException(
-                "Could not connect to Dolphin, verify that you have a game running in the emulator.")
+                "Verify that you have the game running in Dolphin. Retrying...")
 
     def disconnect(self):
         if self.dolphin.is_hooked():
@@ -172,7 +172,7 @@ class DolphinInstance:
 
         if not self.dolphin.is_hooked():
             self.logger.info(f"Dolphin no longer connected.")
-            raise DolphinException("Dolphin no longer connected")
+            raise DolphinException("Dolphin no longer connected.")
 
         address += offset
         return self.write_address(address, data)
@@ -200,7 +200,7 @@ class DolphinBridge:
     def connect_to_game(self):
         try:
             self.dolphin_client.connect()
-            self.logger.info("Connected to Dolphin Emulator")
+            self.logger.info("Connected to Dolphin Emulator.")
             game_id = ""
             # The first read of the address will be null if the client is faster than the emulator
             self.dolphin_client.read_address(HEADER_ID_ADDRESS, 0)
@@ -208,6 +208,7 @@ class DolphinBridge:
             self.current_game = None
             if game_id == "SUKE01":
                 self.current_game = game_id
+                self.logger.info("Successfully connected to game.")
             else:
                 self.logger.warn(
                     f"Strange header detected. Please use a US 'SUKE01' copy of the game.")
@@ -217,7 +218,7 @@ class DolphinBridge:
 
     def disconnect_from_game(self):
         self.dolphin_client.disconnect()
-        self.logger.info("Disconnected from Dolphin Emulator")
+        self.logger.info("Disconnected from Dolphin Emulator.")
 
     def get_item(self, item_id: int) -> InventoryItemData:
         for item in item_table.values():
