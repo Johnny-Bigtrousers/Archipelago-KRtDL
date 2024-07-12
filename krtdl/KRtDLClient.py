@@ -22,6 +22,8 @@ HUD_MESSAGE_ADDRESS = 0x80EB0BE0
 HUD_MESSAGE_DURATION = 10.0
 HUD_MAX_MESSAGE_SIZE = 194
 
+BaseLocationID = 24102011 + 40
+
 class ConnectionState(Enum):
     DISCONNECTED = 0
     IN_GAME = 1
@@ -374,7 +376,7 @@ async def handle_checked_location(ctx: KRtDLContext, current_inventory: dict[str
     # unknown_item1 = current_inventory["UnknownItem1"]
     # if (unknown_item1.current_capacity == 0):
     #     return
-    # checked_location_id = METROID_PRIME_LOCATION_BASE + \
+    # checked_location_id = BaseLocationID + \
     #     unknown_item1.current_capacity - 1
     # await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [checked_location_id]}])
     # ctx.dolphin_bridge.give_item_to_player(unknown_item1.id, 0, 0)
