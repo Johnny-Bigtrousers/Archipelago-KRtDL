@@ -113,8 +113,9 @@ class DolphinInstance:
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
         if not self.dolphin.is_hooked():
+            self.logger.info(f"Could not connect to Dolphin, verify that you have a game running in the emulator.")
             raise DolphinException(
-                "Could not connect to Dolphin, verify that you have a game running in the emulator")
+                "Could not connect to Dolphin, verify that you have a game running in the emulator.")
 
     def disconnect(self):
         if self.dolphin.is_hooked():
@@ -147,6 +148,7 @@ class DolphinInstance:
             return None
 
         if not self.dolphin.is_hooked():
+            self.logger.info(f"Dolphin no longer connected.")
             raise DolphinException("Dolphin no longer connected")
 
         address += offset
@@ -167,6 +169,7 @@ class DolphinInstance:
             return None
 
         if not self.dolphin.is_hooked():
+            self.logger.info(f"Dolphin no longer connected.")
             raise DolphinException("Dolphin no longer connected")
 
         address += offset
@@ -345,7 +348,7 @@ def get_num_dolphin_instances() -> int:
         return 0
 
 async def dolphin_task(ctx: KRtDLContext):
-    Logger.info("Attempting to connect to Dolphin...")
+    Logger.info(f"Attempting to connect to Dolphin...")
     while not ctx.exit_event.is_set():
         try:
             # needs to connect somewhere else for this to work
@@ -370,7 +373,7 @@ async def handle_check_goal_complete(ctx: KRtDLContext):
     # if ctx.game_interface.current_game is not None:
         # need to find the memory locations in RAM for states I can work with for this
 
-    logger.info("yippee cool you win I haven't actually made this do anything yet")
+    ctx.logger.info(f"yippee cool you win I haven't actually made this do anything yet")
     
         # current_level = ctx.game_interface.get_current_level()
         # if current_level == MetroidPrimeLevel.End_of_Game:
@@ -379,7 +382,7 @@ async def handle_check_goal_complete(ctx: KRtDLContext):
 async def handle_check_deathlink(ctx: KRtDLContext):
     # need to find the memory locations in RAM for states I can work with for this
 
-    logger.info("are you dead yet")
+    ctx.logger.info(f"are you dead yet")
     
     # health = ctx.game_interface.get_current_health()
     # if health <= 0 and ctx.is_pending_death_link_reset == False:
@@ -403,7 +406,7 @@ async def _handle_game_ready(ctx: KRtDLContext):
             await handle_check_deathlink(ctx)
         await asyncio.sleep(0.5)
     else:
-        logger.info("Waiting for player to connect to server")
+        ctx.logger.info("Waiting for player to connect to server.")
         await asyncio.sleep(1)
 
 
