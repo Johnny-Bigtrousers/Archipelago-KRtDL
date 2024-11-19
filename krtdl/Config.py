@@ -11,7 +11,7 @@ def make_config(world: "Kirby's Return to Dream Land"):
     config = {
         # "$schema": "https://randovania.org/randomprime/randomprime.schema.json",
         "inputIso": "Kirby's Return to Dream Land (USA) (En,Fr,Es).rvz",
-        "outputIso": "krtdl_out.rvz",
+        "outputIso": "KRtDLArchipelagoPatch.rvz",
         # "forceVanillaLayout": False,
         # "strg": get_strg(world),
         # "preferences": {
