@@ -26,6 +26,7 @@ INHALE_ADDRESS = 0x8052a448 # Default value is 40820088, 48000088 for disable
 FLOAT_ADDRESS = 0x80520ab4 # Default value is 4bfcef51, change to 4bfcef51 for dedede to have it but not kirby, 4bfcef2d to disable only dedede's float and 38600000 to disable both
 METAKNIGHT_FLOAT_ADDRESS = 0x805b7d84 # Default value is 41820068, 48000068 for disable
 BANDANADEE_FLOAT_ADDRESS = 0x80519598 # Default value is 41820050, 48000050 for disable
+SLIDEKICK_ADDRESS = 0x80527cf0 # Default value is 40820010, 48000010 for disable
 
 BaseLocationID = 24102011 + 40
 
