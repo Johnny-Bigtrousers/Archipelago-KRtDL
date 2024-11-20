@@ -160,7 +160,7 @@ class PartSphereSanity(Toggle):
 class StarSanity(Toggle):
     """Turns all guaranteed Gold Stars (ones not gained from Flowers) into checks.
     [WARNING: ADDS A GIGANTIC NUMBER OF CHECKS AND CREATES SOME VERY HARD SEEDS]
-    [MAY RESULT IN FRIENDS YELLING AT YOU FOR PICKING UP HUNDREDS OF STARS IN THEIR WORLD]"""
+    [MAY RESULT IN FRIENDS YELLING AT YOU FOR PICKING UP SEVERAL HUNDREDS OF VERY UNHELPFUL STARS IN THEIR WORLD]"""
     display_name = "Starsanity"
 
 class RedStarSanity(Toggle):
