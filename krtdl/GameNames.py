@@ -21,7 +21,7 @@ class ItemNames(Enum):
     lor_rwing = "Lor Starcutter Right Wing"
     lor_lwing = "Lor Starcutter Left Wing"
     lor_emblem = "Lor Starcutter Emblem"
-    lor_mast = "EX Lor Starcutter Mast"
+    lor_mast = "Lor Starcutter Mast"
     lor_oars_ex = "EX Lor Starcutter Oars"
     lor_rwing_ex = "EX Lor Starcutter Right Wing"
     lor_lwing_ex = "EX Lor Starcutter Left Wing"
@@ -113,8 +113,8 @@ class LocationNames(Enum):
     extra_stage1_4_esphere_4 = ("EX " + StageNames.stage1_4.value + " - Energy Sphere 4")
     extra_stage1_4_complete = ("EX " + StageNames.stage1_4.value + " - Complete")
     
-    stage1_5_part = (StageNames.stage1_5.value + " - Part Sphere")
-    extra_stage1_5_part = ("EX " + StageNames.stage1_5.value + " - Part Sphere")
+    stage1_5_part = (StageNames.stage1_5.value + " - " + lor_oars)
+    extra_stage1_5_part = ("EX " + StageNames.stage1_5.value + " - " + lor_oars_ex)
   
  
     stage2_1_esphere_1 = (StageNames.stage2_1.value + " - Energy Sphere 1")
@@ -161,8 +161,8 @@ class LocationNames(Enum):
     extra_stage2_4_esphere_5 = ("EX " + StageNames.stage2_4.value + " - Energy Sphere 5")
     extra_stage2_4_complete = ("EX " + StageNames.stage2_4.value + " - Complete")
     
-    stage2_5_part = (StageNames.stage2_5.value + " - Complete")
-    extra_stage2_5_part = ("EX " + StageNames.stage2_5.value + " - Part Sphere")
+    stage2_5_part = (StageNames.stage2_5.value + " - " + lor_rwing)
+    extra_stage2_5_part = ("EX " + StageNames.stage2_5.value + " - " + lor_rwing_ex)
 
     
     stage3_1_esphere_1 = (StageNames.stage3_1.value + " - Energy Sphere 1")
@@ -209,8 +209,8 @@ class LocationNames(Enum):
     extra_stage3_4_esphere_5 = ("EX " + StageNames.stage3_4.value + " - Energy Sphere 5")
     extra_stage3_4_complete = ("EX " + StageNames.stage3_4.value + " - Complete")
     
-    stage3_5_part = (StageNames.stage3_5.value + " - Complete")
-    extra_stage3_5_part = ("EX " + StageNames.stage3_5.value + " - Part Sphere")
+    stage3_5_part = (StageNames.stage3_5.value + " - " + lor_lwing)
+    extra_stage3_5_part = ("EX " + StageNames.stage3_5.value + " - " + lor_lwing_ex)
     
     
     stage4_1_esphere_1 = (StageNames.stage4_1.value + " - Energy Sphere 1")
@@ -266,8 +266,8 @@ class LocationNames(Enum):
     extra_stage4_5_esphere_4 = ("EX " + StageNames.stage4_5.value + " - Energy Sphere 4")
     extra_stage4_5_complete = ("EX " + StageNames.stage4_5.value + " - Complete")
     
-    stage4_6_part = (StageNames.stage4_6.value + " - Complete")
-    extra_stage4_6_part = ("EX " + StageNames.stage4_6.value + " - Part Sphere")
+    stage4_6_part = (StageNames.stage4_6.value + " - " + lor_emblem)
+    extra_stage4_6_part = ("EX " + StageNames.stage4_6.value + " - " + lor_emblem_ex)
     
     
     stage5_1_esphere_1 = (StageNames.stage5_1.value + " - Energy Sphere 1")
@@ -325,8 +325,8 @@ class LocationNames(Enum):
     extra_stage5_5_esphere_4 = ("EX " + StageNames.stage5_5.value + " - Energy Sphere 4")
     extra_stage5_5_complete = ("EX " + StageNames.stage5_5.value + " - Complete")
     
-    stage5_6_part = (StageNames.stage5_6.value + " - Complete")
-    extra_stage5_6_part = ("EX " + StageNames.stage5_6.value + " - Part Sphere")
+    stage5_6_part = (StageNames.stage5_6.value + " - " + lor_mast)
+    extra_stage5_6_part = ("EX " + StageNames.stage5_6.value + " - " + lor_mast_ex)
     
 
     stage6_1_esphere_1 = (StageNames.stage6_1.value + " - Energy Sphere 1")
@@ -403,6 +403,7 @@ class LocationNames(Enum):
     extra_stage7_1_esphere_5 = ("EX " + StageNames.stage7_1.value + " - Energy Sphere 5")
     extra_stage7_1_complete = ("EX " + StageNames.stage7_1.value + " - Complete")
 
+    
     stage7_2_esphere_1 = (StageNames.stage7_2.value + " - Energy Sphere 1")
     stage7_2_esphere_2 = (StageNames.stage7_2.value + " - Energy Sphere 2")
     stage7_2_esphere_3 = (StageNames.stage7_2.value + " - Energy Sphere 3")
