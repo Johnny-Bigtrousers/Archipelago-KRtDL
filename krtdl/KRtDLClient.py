@@ -37,9 +37,9 @@ class ConnectionState(Enum):
     MULTIPLE_DOLPHIN_INSTANCES = 3
 
 status_messages = {
+    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance. Retrying...",
     ConnectionState.IN_GAME: "Connected to Kirby's Return to Dream Land.",
     ConnectionState.IN_MENU: "Connected to game, waiting for game to start...",
-    ConnectionState.DISCONNECTED: "Unable to connect to the Dolphin instance. Retrying...",
     ConnectionState.MULTIPLE_DOLPHIN_INSTANCES: "Warning: Multiple Dolphin instances detected, client may not function correctly."
 }
 
