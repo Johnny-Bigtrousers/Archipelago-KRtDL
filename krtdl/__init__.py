@@ -1,19 +1,19 @@
 # HEY BIG DOOFUS YOU NEED TO MAKE THE KRTDL FOLDER THAT ALL OF THIS IS IN TO BE INSIDE OF ANOTHER FOLDER CALLED KRTDL AND THEN TURN IT INTO A ZIP ARCHIVE THEN CHANGE THE EXTENSION TO .APWORLD
 
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, icon_paths, components, launch_subprocess
+import os
 import settings
 import struct
+import zipfile
 import typing
 from typing import Any, Dict, List, Optional
-import zipfile
 from logging import info
-import os
 from .Items import KRtDLItems, item_table
 from .Locations import KRtDLLocations, composite_location
 from .Options import KRtDLOptions, create_option_groups
 from .Config import make_config
 from worlds.AutoWorld import World, WebWorld
-from worlds.Files import APContainer
+from worlds.Files import APPlayerContainer
+from worlds.LauncherComponents import Component, SuffixIdentifier, Type, icon_paths, components, launch_subprocess
 from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
 from Utils import local_path
 
@@ -59,25 +59,37 @@ class KRtDLWeb(WebWorld):
         ["Trodgy"]
     )]
 
-class KRtDLContainer(APContainer):
+class KRtDLContainer(APPlayerContainer):
     game: str = "Kirby's Return to Dream Land"
 
-    def __init__(self, config_json: str, outfile_name: str, output_directory: str,
-                 player=None, player_name: str = "", server: str = ""):
+    def __init__(
+        self, 
+        config_json: str, 
+        options_json: str, 
+        outfile_name: str, 
+        output_directory: str,
+        player: Optional[int] = None, 
+        player_name: str = "", 
+        server: str = ""):
+            
         self.config_json = config_json
         self.config_path = "config.json"
+        self.options_path = "options.json"
+        self.options_json = options_json
         container_path = os.path.join(output_directory, outfile_name + ".krtdl")
         super().__init__(container_path, player, player_name, server)
 
     def write_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
         opened_zipfile.writestr(self.config_path, self.config_json)
+        opened_zipfile.writestr(self.options_path, self.options_json)
         super().write_contents(opened_zipfile)
 
 class KRtDLWorld(World):
     """
     Also known as Kirby's Adventure Wii in PAL regions.
+    
     The tough puff Kirby is back for a 1-4 player platforming adventure across Planet Popstar. 
-    Help the mysterious cosmic traveler Magolor rebuild his ship and return to his home planet Halcandra.
+    Help the mysterious far-flung traveler Magolor rebuild his ship and return to his home planet of Halcandra.
     """
 
     game = "Kirby's Return to Dream Land"
