@@ -300,36 +300,43 @@ class KRtDLContext(CommonContext):
     notification_manager: NotificationManager
     dolphin_bridge: DolphinBridge
     items_handling = 0b111
-    dolphin_task = None
+    dolphin_sync_task = Optional[asyncio.Task[Any]] = None
     connection_state = ConnectionState.DISCONNECTED
+    slot_data: Dict[str, Utils.Any] = {}
     death_link_enabled = False
+    slot_name: Optional[str] = None
+    last_error_message: Optional[str] = None
+    krtdl_file: Optional[str] = None
 
-    def __init__(self, server_address, password):
+    def __init__(self, server_address: str, password: str, krtdl_file: Optional[str] = None):
         super().__init__(server_address, password)
-        self.dolphin_bridge = DolphinBridge(logger)
-        self.notification_manager = NotificationManager(HUD_MESSAGE_DURATION, self.dolphin_bridge.send_hud_message)
+        self.game_interface = DolphinBridge(logger)
+        self.notification_manager = NotificationManager(HUD_MESSAGE_DURATION, self.game_interface.send_hud_message)
+        self.krtdl_file = krtdl_file
     
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
             await super(KRtDLContext, self).server_auth(password_requested)
         await self.get_username()
+        self.tags = set()
         await self.send_connect()
 
-    def on_package(self, cmd: str, args: dict):
+    def on_deathlink(self, data: Utils.Dict[str, Utils.Any]) -> None:
+        super().on_deathlink(data)
+        # fire the death call here
+    
+    def on_package(self, cmd: str, args: Dict[str, Any]) -> None:
         if cmd == "Connected":
             self.slot_data = args["slot_data"]
             if "death_link" in args["slot_data"]:
                 self.death_link_enabled = bool(args["slot_data"]["death_link"])
-                Utils.async_start(self.update_death_link(
-                    bool(args["slot_data"]["death_link"])))
+                Utils.async_start(self.update_death_link(bool(args["slot_data"]["death_link"])))
     
     def run_gui(self):
         from kvui import GameManager
 
         class KRtDLManager(GameManager):
-            logging_pairs = [
-                ("Client", "Archipelago")
-            ]
+            logging_pairs = [("Client", "Archipelago")]
             base_title = "Archipelago Kirby's Return to Dream Land Client"
 
         self.ui = KRtDLManager(self)
