@@ -89,7 +89,7 @@ class KRtDLCommandProcessor(ClientCommandProcessor):
                 f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
 
 class InventoryItemData(ItemData):
-    """Class used to track the player'scurrent items and their quantities"""
+    """Class used to track the player's current items and their quantities"""
     current_amount: int
     current_capacity: int
 
