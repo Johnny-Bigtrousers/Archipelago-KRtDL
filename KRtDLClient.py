@@ -1,5 +1,3 @@
-# Based on @hesto2's work on MetroidAPrime (https://github.com/Electro1512/MetroidAPrime/tree/main)
-
 from logging import Logger
 import dolphin_memory_engine
 import subprocess
