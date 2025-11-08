@@ -127,8 +127,7 @@ class DolphinInstance:
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
         if not self.dolphin.is_hooked():
-            raise DolphinException(
-                "Verify that you have the game running in Dolphin. Retrying...")
+            raise DolphinException("Verify that you have the game running in Dolphin. Retrying...")
 
     def disconnect(self):
         if self.dolphin.is_hooked():
@@ -261,7 +260,6 @@ class DolphinBridge:
     def is_in_playable_state(self) -> bool:
         """ Check if the player is in the actual game rather than the main menu """
         return True # for now just assume that the menu is it and it's all good cuz setting this up needs some RAM addresses
-        # return self.get_current_level() is not None and self.__is_player_table_ready()
 
     def send_hud_message(self, message: str) -> bool:
         message = f"&just=center;{message}"
@@ -371,15 +369,27 @@ def get_num_dolphin_instances() -> int:
     except:
         return 0
 
-async def dolphin_task(ctx: KRtDLContext):
-    logger.info(f"Attempting to connect to Dolphin...")
+async def dolphin_sync_task(ctx: KRtDLContext):
+    try:
+        # This will not work if the client is running from source
+        version = get_apworld_version()
+        logger.info(f"Using krtdl.apworld version: {version}")
+    except:
+        pass
+
+    if ctx.krtdl_file:
+        Utils.async_start(patch_and_run_game(ctx.krtdl_file))
+
+    logger.info("Starting Dolphin Connector, attempting to connect to emulator...")
+
     while not ctx.exit_event.is_set():
         try:
-            # needs to connect somewhere else for this to work
-            connection_state = ctx.dolphin_bridge.get_connection_state()
+            connection_state = ctx.DolphinBridge.get_connection_state()
             update_connection_status(ctx, connection_state)
             if connection_state == ConnectionState.IN_MENU:
-                await handle_check_goal_complete(ctx)  # It will say the player is in menu sometimes
+                await handle_check_goal_complete(
+                    ctx
+                )  # It will say the player is in menu sometimes
             if connection_state == ConnectionState.IN_GAME:
                 await _handle_game_ready(ctx)
             else:
@@ -405,7 +415,7 @@ def inventory_item_by_network_id(network_id: int, current_inventory: dict[str, I
     #         return InventoryItemData(value, 0, 0)
     return None
 
-async def handle_receive_items(ctx: 'MetroidPrimeContext', current_items: dict[str, InventoryItemData]):
+async def handle_receive_items(ctx: 'KRtDLContext', current_items: dict[str, InventoryItemData]):
     logger.info("unfinished handle items")
     for network_item in ctx.items_received:
         item_data = inventory_item_by_network_id(
