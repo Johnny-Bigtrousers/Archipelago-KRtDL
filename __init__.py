@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from logging import info
 from .Items import KRtDLItems, item_table
 from .Locations import KRtDLLocations, composite_location
-from .Options import KRtDLOptions, create_option_groups
+from .Options import KRtDLOptions, krtdl_option_groups
 from .Config import make_config
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APPlayerContainer
