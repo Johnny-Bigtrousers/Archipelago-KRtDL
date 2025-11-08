@@ -121,7 +121,6 @@ class DolphinInstance:
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
         if not self.dolphin.is_hooked():
-            self.logger.info(f"Verify that you have the game running in Dolphin. Retrying...")
             raise DolphinException(
                 "Verify that you have the game running in Dolphin. Retrying...")
 
