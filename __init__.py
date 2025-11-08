@@ -126,7 +126,8 @@ class KRtDLWorld(World):
                 f.write(configjsons)
 
         # convert configjson to json
-
+        
+        options_json = json.dumps(options_dict, indent=4)
         outfile_name = self.multiworld.get_out_file_name_base(self.player)
-        krtdl = KRtDLContainer(configjsons, outfile_name, output_directory, player=self.player, player_name=self.multiworld.get_player_name(self.player))
+        krtdl = KRtDLContainer(configjsons, options_json, outfile_name, output_directory, player=self.player, player_name=self.player_name)
         krtdl.write()
