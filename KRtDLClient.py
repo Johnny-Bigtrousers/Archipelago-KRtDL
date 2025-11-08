@@ -204,6 +204,7 @@ class DolphinBridge:
         self.dolphin_client = DolphinInstance(logger)
 
     def connect_to_game(self):
+        """Initializes the connection to dolphin and verifies it is connected to Kirby's Return to Dream Land"""
         try:
             self.dolphin_client.connect()
             self.logger.info("Connected to Dolphin Emulator.")
@@ -214,12 +215,12 @@ class DolphinBridge:
             self.current_game = None
             if game_id == "SUKE01":
                 self.current_game = game_id
-                self.logger.info("Successfully connected to game.")
+                self.logger.info("Successfully found SUKE01.")
             else:
                 self.logger.warn(
-                    f"Strange header detected. Please use a US 'SUKE01' copy of the game.")
+                    f"Strange header detected. Please provide a blank US RVZ of Return to Dream Land.")
                 self.game_id_error = game_id
-        except DolphinException as e:
+        except DolphinException:
             pass
 
     def disconnect_from_game(self):
