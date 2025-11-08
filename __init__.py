@@ -14,7 +14,7 @@ from .Config import make_config
 from worlds.AutoWorld import World, WebWorld
 from worlds.Files import APPlayerContainer
 from worlds.LauncherComponents import Component, SuffixIdentifier, Type, icon_paths, components, launch_subprocess
-from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassification
+from BaseClasses import MultiWorld, Region, Location, Entrance, Item, Tutorial, ItemClassification
 from Utils import local_path
 
 BaseID = 24102011
