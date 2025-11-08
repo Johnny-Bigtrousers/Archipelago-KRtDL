@@ -1,29 +1,25 @@
 from typing import List, TYPE_CHECKING, Dict, Any
 from dataclasses import dataclass
 from worlds.AutoWorld import PerGameCommonOptions
-from Options import Choice, Range, Toggle, DeathLink, DefaultOnToggle, OptionGroup, OptionSet
-
-def create_option_groups() -> List[OptionGroup]:
-    option_group_list: List[OptionGroup] = []
-    for name, options in krtdl_option_groups.items():
-        option_group_list.append(OptionGroup(name=name, options=options))
-
-    return option_group_list
+from Options import Choice, Range, Toggle, DeathLink, DefaultOnToggle, OptionSet, OptionGroup, PerGameCommonOptions
 
 class Goal(Choice):
     """Determines the goal for your run.
     
     Main Complete - Complete the Main mode by defeating the final boss.
-    The Arena - Complete The Arena.
     Extra Complete - Complete the Extra mode by defeating the EX final boss.
+
+    The Arena - Complete The Arena.
     The True Arena - Complete The True Arena.
+    
     Energy Sphere Hunt - Collect a set number of Energy Spheres.
+    
     Perfectionist - Obtain every available check. [Adapts to Sanity options]"""
     display_name = "Goal"
     default = 0
     option_main_complete = 0
-    option_the_arena = 1
-    option_extra_complete = 2
+    option_extra_complete = 1
+    option_the_arena = 2
     option_the_true_arena = 3
     option_energy_sphere_hunt = 4
     option_perfectionist = 5
@@ -93,7 +89,7 @@ class ShuffleStages(Choice):
     option_light = 1
     option_intense = 2
 
-class UnlockStages(Toggle):
+class StartWithAllStages(Toggle):
     """Unlocks all of the non-boss stages from the start. Beating all of a level's stages unlocks the boss stage slot."""
     display_name = "Unlock Worlds"
 
@@ -143,7 +139,7 @@ class RandomizeMoves(Toggle):
     display_name = "Randomize Moves"
 
 class RandomizeItems(Toggle):
-    """Requires items such as Invincibility Candy or the Crackler to be unlocked to be able to obtain them."""
+    """Requires items such as Invincibility Candy or the Crackler to be unlocked to be able to find them in levels."""
     display_name = "Randomize Items"
 
 class EnergySphereSanity(Toggle):
@@ -160,7 +156,7 @@ class PartSphereSanity(Toggle):
 class StarSanity(Toggle):
     """Turns all guaranteed Gold Stars (ones not gained from Flowers) into checks.
     [WARNING: ADDS A GIGANTIC NUMBER OF CHECKS AND CREATES SOME VERY HARD SEEDS]
-    [MAY RESULT IN FRIENDS YELLING AT YOU FOR PICKING UP SEVERAL HUNDREDS OF VERY UNHELPFUL STARS IN THEIR WORLD]"""
+    [MAY RESULT IN FRIENDS YELLING AT YOU FROM PICKING UP HUNDREDS OF VERY UNHELPFUL STARS IN THEIR WORLD]"""
     display_name = "Starsanity"
 
 class RedStarSanity(Toggle):
@@ -185,7 +181,7 @@ class MaximSanity(Toggle):
 
 class ExtraSanity(Toggle):
     """Effectively doubles the number of checks by replicating all of Main mode's checks to Extra Mode uniquely.
-    [WARNING: ADDS AN OBSCENE NUMBER OF EXTRA CHECKS AND MAY REQUIRE TWO FULL PLAYTHROUGHS OF THE GAME]
+    [WARNING: ADDS AN OBSCENE NUMBER OF EXTRA CHECKS AND COULD REQUIRE TWO FULL PLAYTHROUGHS OF THE GAME]
     [MAY RESULT IN A GRUELING ENDURANCE TEST]"""
     display_name = "Extrasanity"
 
@@ -223,85 +219,69 @@ class MouthfulWeight(Range):
 
 @dataclass
 class KRtDLOptions(PerGameCommonOptions):
-    Goal:                         Goal
-    EnergySphereHuntRequirement:  EnergySphereHuntRequirement
-    ShuffleCookieCountry:         ShuffleCookieCountry
-    ShuffleRaisinRuins:           ShuffleRaisinRuins
-    ShuffleOnionOcean:            ShuffleOnionOcean
-    ShuffleWhiteWafers:           ShuffleWhiteWafers
-    ShuffleNuttyNoon:             ShuffleNuttyNoon
-    ShuffleEggEngines:            ShuffleEggEngines
-    ShuffleDangerousDinner:       ShuffleDangerousDinner
-    StartingWorld:                StartingWorld
-    UnlockWorlds:                 UnlockWorlds
-
-    ShuffleStages:            ShuffleStages
-    ShuffleBossStages:        ShuffleBossStages
-    ShuffleBosses:            ShuffleBosses
-    ShuffleEnemies:           ShuffleEnemies
+    """Options for Kirby's Return to Dream Land."""
     
-    ShuffleCopyAbilities:     ShuffleCopyAbilities
-    RandomizeCopyAbilities:   RandomizeCopyAbilities
-    RandomizeLandia: RandomizeLandia
-    RandomizeMoves:           RandomizeMoves
-    RandomizeItems:           RandomizeItems
+    goal:                           Goal
+    energy_sphere_hunt_requirement: EnergySphereHuntRequirement
+    ShuffleEnemies:            ShuffleEnemies
+    randomize_enemy_abilities: RandomizeEnemyAbilities
+    ShuffleBosses:             ShuffleBosses
+    starting_world:                 StartingWorld
+    start_with_all_stages:          StartWithAllStages
 
-    StarSanity:               StarSanity
-    RedStarSanity:            RedStarSanity
-    BlueStarSanity:           BlueStarSanity
-    FoodSanity:               FoodSanity
-    OneUpSanity:              OneUpSanity
-    MaximSanity:              MaximSanity
+    ShuffleStages:                  ShuffleStages
+    ShuffleBossStages:              ShuffleBossStages
+    shuffle_cookie_country:         ShuffleCookieCountry
+    shuffle_raisin_ruins:           ShuffleRaisinRuins
+    shuffle_onion_ocean:            ShuffleOnionOcean
+    shuffle_white_wafers:           ShuffleWhiteWafers
+    shuffle_nutty_noon:             ShuffleNuttyNoon
+    shuffle_egg_engines:            ShuffleEggEngines
+    shuffle_dangerous_dinner:       ShuffleDangerousDinner
+    
+    shuffle_copy_abilities: ShuffleCopyAbilities
+    shuffle_landia: ShuffleLandia
+    shuffle_moves: ShuffleMoves
+    shuffle_level_items: ShuffleLevelItems
 
-    TrapChance:               TrapChance
-    SleepWeight:              SleepWeight
-    EjectWeight:              EjectWeight
-    MouthfulWeight:           MouthfulWeight
+    star_sanity: StarSanity
+    red_star_sanity: RedStarSanity
+    blue_star_sanity: BlueStarSanity
+    food_sanity: FoodSanity
+    one_up_sanity: OneUpSanity
+    maxim_sanity: MaximSanity
 
-    death_link:               DeathLink
+    trap_chance: TrapChance
+    sleep_weight: SleepWeight
+    eject_weight: EjectWeight
+    mouthful_weight: MouthfulWeight
+
+    death_link: DeathLink
 
 krtdl_option_groups: Dict[str, List[Any]] = {
-    "Basic Options": [Goal, EnergySphereHuntRequirement, ShuffleCookieCountry, ShuffleRaisinRuins, ShuffleOnionOcean, ShuffleWhiteWafers, ShuffleNuttyNoon, ShuffleEggEngines, ShuffleDangerousDinner, StartingWorld, UnlockWorlds],
+    OptionGroup(
+        "Basic Options", 
+                [Goal, EnergySphereHuntRequirement, ShuffleCookieCountry, ShuffleRaisinRuins, ShuffleOnionOcean, ShuffleWhiteWafers, ShuffleNuttyNoon, ShuffleEggEngines, ShuffleDangerousDinner, StartingWorld, UnlockWorlds],
+    ),
 
-    "Stage Options": [ShuffleStages, ShuffleBossStages, ShuffleBosses, ShuffleEnemies],
+    OptionGroup(
+        "Stage Options",
+                [ShuffleStages, ShuffleBossStages, ShuffleBosses, ShuffleEnemies],
+    ),
 
-    "Item Options": [ShuffleCopyAbilities, RandomizeCopyAbilities, RandomizeLandia, RandomizeMoves, RandomizeItems],
+    OptionGroup(
+        "Item Options", 
+                [ShuffleCopyAbilities, RandomizeCopyAbilities, RandomizeLandia, RandomizeMoves, RandomizeItems],
+    ),
 
-    "Sanity Options": [StarSanity, RedStarSanity, BlueStarSanity, FoodSanity, OneUpSanity, MaximSanity],
+    OptionGroup(
+        "Sanity Options", [StarSanity, RedStarSanity, BlueStarSanity, FoodSanity, OneUpSanity, MaximSanity],
+    ),
 
-    "Trap Options": [TrapChance, SleepWeight, EjectWeight, MouthfulWeight]
+    OptionGroup(
+        "Trap Options", [TrapChance, SleepWeight, EjectWeight, MouthfulWeight],
+    ),
 }
-
-data_options: List[str] = [
-    "Goal",
-    "EnergySphereHuntRequirement",
-    "ShuffleCookieCountry",
-    "ShuffleRaisinRuins",
-    "ShuffleOnionOcean",
-    "ShuffleWhiteWafers",
-    "ShuffleNuttyNoon",
-    "ShuffleEggEngines",
-    "ShuffleDangerousDinner",
-    "StartingWorld",
-    "UnlockWorlds",
-    "ShuffleStages",
-    "ShuffleBossStages",
-    "ShuffleBosses",
-    "ShuffleEnemies",
-    "ShuffleCopyAbilities",
-    "RandomizeCopyAbilities",
-    "RandomizeLandia",
-    "RandomizeMoves",
-    "RandomizeItems",
-    "StarSanity",
-    "RedStarSanity",
-    "BlueStarSanity",
-    "FoodSanity",
-    "OneUpSanity",
-    "MaximSanity",
-
-    "death_link",
-]
 
 def create_option_groups() -> List[OptionGroup]:
     option_group_list: List[OptionGroup] = []
