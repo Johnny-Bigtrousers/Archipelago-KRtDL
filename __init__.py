@@ -94,11 +94,15 @@ class KRtDLWorld(World):
 
     game = "Kirby's Return to Dream Land"
     web = KRtDLWeb()
+    required_client_version = (0, 6, 4)
     options_dataclass = KRtDLOptions
     options: KRtDLOptions
     topology_present = True
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = composite_location
+
+    def __init__(self, multiworld: MultiWorld, player: int):
+        super().__init__(multiworld, player)
 
     def generate_output(self, output_directory: str) -> None:
         # if self.options.randomize_suit_colors:
