@@ -93,6 +93,10 @@ class StartWithAllStages(Toggle):
     """Unlocks all of the non-boss stages from the start. Beating all of a level's stages unlocks the boss stage slot."""
     display_name = "Start with all Stages"
 
+class StartInExtraGame(Toggle):
+    """Choose whether or not the run starts in Extra Mode"""
+    display_name = "Start in Extra Mode"
+
 
 
 
@@ -242,6 +246,7 @@ class KRtDLOptions(PerGameCommonOptions):
     starting_world: StartingWorld
     start_with_all_worlds: StartWithAllWorlds
     start_with_all_stages: StartWithAllStages
+    start_in_extra_game: StartInExtraGame
 
     shuffle_stages: ShuffleStages
     shuffle_boss_stages: ShuffleBossStages
@@ -285,7 +290,8 @@ krtdl_option_groups = [
          ShuffleBosses,
          StartingWorld, 
          StartWithAllWorlds,
-         StartWithAllStages],
+         StartWithAllStages,
+         StartInExtraGame],
     ),
 
     OptionGroup(
