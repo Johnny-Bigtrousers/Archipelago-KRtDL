@@ -26,6 +26,8 @@ METAKNIGHT_FLOAT_ADDRESS = 0x805b7d84 # Default value is 41820068, 48000068 for 
 BANDANADEE_FLOAT_ADDRESS = 0x80519598 # Default value is 41820050, 48000050 for disable
 SLIDEKICK_ADDRESS = 0x80527cf0 # Default value is 40820010, 48000010 for disable
 
+# ^^^^ these addresses are all redundant due to the Wii's memory system, need to find address chains in order to find consistent addresses for the game's data
+
 BaseLocationID = 24102011 + 40
 
 class ConnectionState(Enum):
