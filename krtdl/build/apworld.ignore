@@ -1,5 +1,7 @@
 .git*
 __pycache__
 build
+LICENSE.md
+README.md
 requirements.txt
 *.rvz
