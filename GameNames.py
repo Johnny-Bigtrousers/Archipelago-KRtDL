@@ -159,8 +159,8 @@ class LocationNames(Enum):
     extra_stage2_4_esphere_5 = ("EX " + StageNames.stage2_4.value + " - Energy Sphere 5")
     extra_stage2_4_complete = ("EX " + StageNames.stage2_4.value + " - Complete")
     
-    stage2_5_part = (StageNames.stage2_5.value + " - " + lor_rwing.value)
-    extra_stage2_5_part = ("EX " + StageNames.stage2_5.value + " - " + lor_rwing_ex.value)
+    stage2_5_part = (StageNames.stage2_5.value + " - " + ItemNames.lor_rwing.value)
+    extra_stage2_5_part = ("EX " + StageNames.stage2_5.value + " - " + ItemNames.lor_rwing_ex.value)
 
     
     stage3_1_esphere_1 = (StageNames.stage3_1.value + " - Energy Sphere 1")
