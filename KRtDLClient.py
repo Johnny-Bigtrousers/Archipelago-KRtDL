@@ -68,7 +68,9 @@ class NotificationManager:
                 self.time_since_last_message = 0
 
 class KRtDLCommandProcessor(ClientCommandProcessor):
-    def __init__(self, ctx: CommonContext):
+    ctx: "KRtDLContext"
+    
+    def __init__(self, ctx: "KRtDLContext"):
         super().__init__(ctx)
 
     def _cmd_test_message(self, *args):
@@ -81,12 +83,16 @@ class KRtDLCommandProcessor(ClientCommandProcessor):
 
     def _cmd_deathlink(self):
         """Toggle deathlink from client. Overrides default setting."""
-        if isinstance(self.ctx, KRtDLContext):
-            self.ctx.death_link_enabled = not self.ctx.death_link_enabled
-            Utils.async_start(self.ctx.update_death_link(
-                self.ctx.death_link_enabled), name="Update Deathlink")
-            logger.info(
-                f"Deathlink is now {'enabled' if self.ctx.death_link_enabled else 'disabled'}")
+        self.ctx.death_link_enabled = not self.ctx.death_link_enabled
+        Utils.async_start(
+            self.ctx.update_death_link(self.ctx.death_link_enabled),
+            name="Update Deathlink",
+        )
+        message = (
+            f"Deathlink {'enabled' if self.ctx.death_link_enabled else 'disabled'}"
+        )
+        logger.info(message)
+        self.ctx.notification_manager.queue_notification(message)
 
 class InventoryItemData(ItemData):
     """Class used to track the player's current items and their quantities"""
