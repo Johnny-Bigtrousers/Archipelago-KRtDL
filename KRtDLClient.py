@@ -285,6 +285,9 @@ class DolphinBridge:
 
         self.dolphin_client.write_address(HUD_MESSAGE_ADDRESS, encoded_message)
 
+    def reset_relay_tracker_cache(self):
+        self.relay_trackers = None
+
 class KRtDLContext(CommonContext):
     game = "Kirby's Return to Dream Land"
     command_processor = KRtDLCommandProcessor
@@ -473,6 +476,7 @@ async def _handle_game_ready(ctx: KRtDLContext):
 
 async def _handle_game_not_ready(ctx: KRtDLContext):
     """If the game is not connected or not in a playable state, this will attempt to retry connecting to the game."""
+    ctx.dolphin_bridge.reset_relay_tracker_cache()
     if ctx.connection_state == ConnectionState.DISCONNECTED:
         ctx.dolphin_bridge.connect_to_game()
     elif ctx.connection_state == ConnectionState.IN_MENU:
@@ -486,8 +490,12 @@ async def run_game(romfile):
         import webbrowser
         webbrowser.open(romfile)
     elif os.path.isfile(auto_start) and assert_no_running_dolphin():
-        subprocess.Popen([auto_start, romfile],
-                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.Popen(
+            [str(auto_start), romfile],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
 def get_version_from_rvz(path: str) -> str:
     if not os.path.exists(path):
@@ -497,7 +505,7 @@ def get_version_from_rvz(path: str) -> str:
         if game_id == "SUKE01":
             return "SUKE01"
         else:
-            raise Exception("Strange header detected. Please use a blank US 'SUKE01' copy of the game.")
+            raise Exception("Strange header detected. Ensure you are using a blank US RVZ of Return to Dream Land.")
 
 async def patch_and_run_game(krtdl_file: str):
     krtdl_file = os.path.abspath(krtdl_file)
@@ -507,6 +515,8 @@ async def patch_and_run_game(krtdl_file: str):
     output_path = base_name + '.rvz'
 
     if not os.path.exists(output_path):
+        if not zipfile.is_zipfile(krtdl_file):
+            raise Exception(f"Invalid krtdl file: {krtdl_file}")
 
         config_json_file = None
         if zipfile.is_zipfile(krtdl_file):
@@ -524,7 +534,7 @@ async def patch_and_run_game(krtdl_file: str):
         # config_json["gameConfig"]["updateHintStateReplacement"] = construct_hud_message_patch(game_version)
 
     
-        # this is the point where the RVZ must be patched.                         py_randomprime.patch_iso(input_rvz_path, output_path, config_json, notifier)
+        # this is the point where the RVZ must be patched                    py_randomprime.patch_iso(input_rvz_path, output_path, config_json, notifier)
     
 
     Utils.async_start(run_game(output_path))
@@ -541,11 +551,12 @@ def launch():
                             help='Path to an krtdl file')
         args = parser.parse_args()
 
+        ctx = KRtDLContext(args.connect, args.password)
+        
         if args.krtdl_file:
             logger.info("KRTDL file supplied, beginning patching process...")
             Utils.async_start(patch_and_run_game(args.krtdl_file))
-
-        ctx = KRtDLContext(args.connect, args.password)
+            
         logger.info("Connecting to server...")
         ctx.server_task = asyncio.create_task(server_loop(ctx), name="Server Loop")
         if gui_enabled:
@@ -553,7 +564,7 @@ def launch():
         ctx.run_cli()
 
         logger.info("Running game...")
-        ctx.dolphin_task = asyncio.create_task(dolphin_task(ctx), name="Dolphin Sync")
+        ctx.dolphin_sync_task = asyncio.create_task(dolphin_sync_task(ctx), name="Dolphin Sync")
 
         await ctx.exit_event.wait()
         ctx.server_address = None
@@ -562,7 +573,7 @@ def launch():
 
         if ctx.dolphin_task:
             await asyncio.sleep(3)
-            await ctx.dolphin_task
+            await ctx.dolphin_sync_task
 
     import colorama
 
