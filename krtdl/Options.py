@@ -258,34 +258,54 @@ class KRtDLOptions(PerGameCommonOptions):
 
     death_link: DeathLink
 
-krtdl_option_groups: Dict[str, List[Any]] = {
+krtdl_option_groups = [
     OptionGroup(
         "Basic Options", 
-                [Goal, EnergySphereHuntRequirement, ShuffleCookieCountry, ShuffleRaisinRuins, ShuffleOnionOcean, ShuffleWhiteWafers, ShuffleNuttyNoon, ShuffleEggEngines, ShuffleDangerousDinner, StartingWorld, UnlockWorlds],
+        [Goal, 
+         EnergySphereHuntRequirement, 
+         ShuffleCookieCountry, 
+         ShuffleRaisinRuins, 
+         ShuffleOnionOcean, 
+         ShuffleWhiteWafers, 
+         ShuffleNuttyNoon, 
+         ShuffleEggEngines, 
+         ShuffleDangerousDinner, 
+         StartingWorld, 
+         UnlockWorlds],
     ),
 
     OptionGroup(
         "Stage Options",
-                [ShuffleStages, ShuffleBossStages, ShuffleBosses, ShuffleEnemies],
+        [ShuffleStages, 
+         ShuffleBossStages, 
+         ShuffleBosses, 
+         ShuffleEnemies],
     ),
 
     OptionGroup(
         "Item Options", 
-                [ShuffleCopyAbilities, RandomizeCopyAbilities, RandomizeLandia, RandomizeMoves, RandomizeItems],
+        [ShuffleCopyAbilities, 
+         RandomizeCopyAbilities, 
+         RandomizeLandia, 
+         RandomizeMoves, 
+         RandomizeItems],
     ),
 
     OptionGroup(
-        "Sanity Options", [StarSanity, RedStarSanity, BlueStarSanity, FoodSanity, OneUpSanity, MaximSanity],
+        "Sanity Options", 
+        [StarSanity, 
+         RedStarSanity, 
+         BlueStarSanity, 
+         FoodSanity, 
+         OneUpSanity, 
+         MaximSanity],
     ),
 
     OptionGroup(
-        "Trap Options", [TrapChance, SleepWeight, EjectWeight, MouthfulWeight],
+        "Trap Options", 
+        [TrapChance, 
+         SleepWeight, 
+         EjectWeight, 
+         MouthfulWeight],
     ),
-}
-
-def create_option_groups() -> List[OptionGroup]:
-    option_group_list: List[OptionGroup] = []
-    for name, options in krtdl_option_groups.items():
-        option_group_list.append(OptionGroup(name=name, options=options))
-
-    return option_group_list
+]
