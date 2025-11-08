@@ -62,7 +62,7 @@ class RandomizeEnemyAbilities(Toggle):
     display_name = "Randomize Enemy Abilities"
 
 class ShuffleBosses(Choice):
-    """Shuffles the game's bosses around excluding Another Dimension.
+    """Shuffles the game's bosses around excluding the two in Another Dimension.
     
     Light - Bosses will be shuffled with eachother.
     Anomalous - Randomizes boss fights out of the game's possible ones."""
