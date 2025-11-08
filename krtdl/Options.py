@@ -1,6 +1,5 @@
-from typing import List, TYPE_CHECKING, Dict, Any
+from typing import List
 from dataclasses import dataclass
-from worlds.AutoWorld import PerGameCommonOptions
 from Options import Choice, Range, Toggle, DeathLink, DefaultOnToggle, OptionSet, OptionGroup, PerGameCommonOptions
 
 class Goal(Choice):
