@@ -4,6 +4,8 @@ A very, very WIP Archipelago .apworld implementation for Kirby's Return to Dream
 
 This readme isn't done yet so plenty of info will be missing.
 
+This implementation is possible thanks to @hesto2's work on MetroidAPrime (https://github.com/Electro1512/MetroidAPrime/tree/main)
+
 
 
 # Supported versions
