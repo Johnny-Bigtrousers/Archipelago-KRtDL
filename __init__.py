@@ -5,7 +5,7 @@ import settings
 import struct
 import zipfile
 import typing
-from typing import Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from logging import info
 from .Items import KRtDLItems, item_table
 from .Locations import KRtDLLocations, composite_location
@@ -18,6 +18,12 @@ from BaseClasses import Region, Location, Entrance, Item, Tutorial, ItemClassifi
 from Utils import local_path
 
 BaseID = 24102011
+
+if TYPE_CHECKING:
+    from ppc_asm.assembler.ppc import GeneralRegister  # type: ignore
+
+class MultiworldWithPassthrough(MultiWorld):
+    re_gen_passthrough: Dict[str, Dict[str, Any]] = {}
 
 def run_client(url: Optional[str] = None):
     from .KRtDLClient import launch
