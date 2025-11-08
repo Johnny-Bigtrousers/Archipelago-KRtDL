@@ -33,9 +33,17 @@ item_table: dict[str, ItemData] = {
 
     # progression items
     ItemNames.energy_sphere.value: ItemData(ItemNames.energy_sphere.value, 24, ItemClassification.progression, 120),
-    ItemNames.part_sphere.value: ItemData(ItemNames.part_sphere.value, 25, ItemClassification.progression, 5),
-    ItemNames.energy_sphere_ex.value: ItemData(ItemNames.energy_sphere_ex.value, 26, ItemClassification.progression, 120),
-    ItemNames.part_sphere_ex.value: ItemData(ItemNames.part_sphere_ex.value, 27, ItemClassification.progression, 5),
+    ItemNames.energy_sphere_ex.value: ItemData(ItemNames.energy_sphere_ex.value, 25, ItemClassification.progression, 120),
+    ItemNames.lor_oars.value: ItemData(ItemNames.lor_oars.value, 26, ItemClassification.progression, 1),
+    ItemNames.lor_rwing.value: ItemData(ItemNames.lor_rwing.value, 27, ItemClassification.progression, 1),
+    ItemNames.lor_lwing.value: ItemData(ItemNames.lor_lwing.value, 28, ItemClassification.progression, 1),
+    ItemNames.lor_emblem.value: ItemData(ItemNames.lor_emblem.value, 29, ItemClassification.progression, 1),
+    ItemNames.lor_mast.value: ItemData(ItemNames.lor_mast.value, 30, ItemClassification.progression, 1),
+    ItemNames.lor_oars_ex.value: ItemData(ItemNames.lor_oars_ex.value, 31, ItemClassification.progression, 1),
+    ItemNames.lor_rwing_ex.value: ItemData(ItemNames.lor_rwing_ex.value, 32, ItemClassification.progression, 1),
+    ItemNames.lor_lwing_ex.value: ItemData(ItemNames.lor_lwing_ex.value, 33, ItemClassification.progression, 1),
+    ItemNames.lor_emblem_ex.value: ItemData(ItemNames.lor_emblem_ex.value, 34, ItemClassification.progression, 1),
+    ItemNames.lor_mast_ex.value: ItemData(ItemNames.lor_mast_ex.value, 35, ItemClassification.progression, 1),
 
     # trap items
     ItemNames.sleep_trap.value: ItemData(ItemNames.sleep_trap.value, 37, ItemClassification.trap),
