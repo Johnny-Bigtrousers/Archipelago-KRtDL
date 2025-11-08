@@ -55,7 +55,7 @@ class KRtDLSettings(settings.Group):
 class KRtDLWeb(WebWorld):
     theme = "grassFlowers"
     rich_text_options_doc = True
-    option_groups = create_option_groups()
+    option_groups = krtdl_option_groups
     tutorials = [Tutorial(
         "Multiworld Setup Guide",
         "A guide to setting up Kirby's Return to Dream Land for MultiWorld.",
