@@ -11,6 +11,7 @@ import time
 import json
 import struct
 from enum import Enum
+from typing import Any, Dict, List, Optional, cast
 from CommonClient import ClientCommandProcessor, CommonContext, get_base_parser, logger, server_loop, gui_enabled
 from NetUtils import ClientStatus, NetworkItem
 from .Items import ItemData, item_table
