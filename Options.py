@@ -113,7 +113,7 @@ class ShuffleStages(Choice):
 
 class ShuffleBossStages(Toggle):
     """Shuffles the game's boss stages around.
-    [If Shuffle Stages is turned on to Intense then boss stages can possibly end up in other worlds]"""
+    [If Shuffle Stages is turned on to Intense then worlds may have no or multiple boss stages]"""
     display_name = "Shuffle Boss Stages"
 
 class ShuffleCookieCountry(DefaultOnToggle):
@@ -159,8 +159,8 @@ class ShuffleMoves(Toggle):
     """If enabled, requires some of Kirby's basic moves to be unlocked to be able to use them."""
     display_name = "Shuffle Moves"
 
-class ShuffleLevelItems(Toggle):
-    """Requires items such as Invincibility Candy or Crackler to be unlocked to be able to find them in levels."""
+class ShuffleLevelItems(DefaultOnToggle):
+    """Requires objects such as Buttons, Invincibility Candy or Crackler to be unlocked to be able to find them in levels."""
     display_name = "Shuffle Items"
 
 
